@@ -1,5 +1,7 @@
 const {User} = require('../models');
 const bcrypt = require('bcrypt');
+// require du module email-validator
+const validator = require("email-validator");
 
 module.exports = {
     login: (request, response) => {
@@ -48,5 +50,69 @@ module.exports = {
     },
     profile: (request, response) => {
         response.render('profile');
+    },
+    signup: (request, response) => {
+        response.render('signup');
+    },
+    doSignup: (request, response) => {
+
+            // 1 firstname ne doit pas être vide
+            if (!request.body.firstname || request.body.firstname.length === 0) {
+                return response.render('signup', {error: 'Le prénom ne doit pas être vide', fields: request.body});
+            }
+            // 2 lastname ne doit pas être vide
+            if (!request.body.lastname || request.body.lastname.length === 0) {
+                return response.render('signup', {error: 'Le prénom ne doit pas être vide', fields: request.body});
+            }
+            // 3 l'email doit être valide
+            if (!validator.validate(request.body.email)) {
+                return response.render('signup', {error: 'L\'adresse email n\'est pas correcte', fields: request.body})
+            }
+
+            // imposer un mot de passe d'une longueur minimum de 8 caractères
+            if (!request.body.password || request.body.password.length < 8) {
+                return response.render('signup', {error: 'Le mot de passe doit contenir au moins 8 caractères', fields: request.body})
+            } 
+            // confirmer le mot de passe
+            if (request.body.password !== request.body.passwordConfirm) {
+                return response.render('signup', {error: 'Veuillez confirmer le mot de passe', fields: request.body})
+            } 
+
+            //on cherche à identifier l'utilisateur à partir de son email
+            User.findOne({where: {email: request.body.email}}).then(user => {
+                //l'utilisateur avec cet email existe: on retourne un message d'eereur et on reaffiche la page signup
+                if (user) {
+                    return response.render('signup', {error: 'Un utilisateur avec cet email existe déjà!', fields: request.body});
+                } else {
+                    // je stocke le mot de passe en le hashant
+                    const hashedPassword = bcrypt.hashSync(request.body.password, 10);
+
+                    // je peux créer une instance de User 
+                    const newUser = new User({
+                        firstname: request.body.firstname,
+                        lastname: request.body.lastname,
+                        email: request.body.email,
+                        password: hashedPassword,
+                        role: 'user'
+                    });
+
+                    newUser.save().then( () => {
+                        //le user est bien connecté et ses infos stockées en session, on le redirige vers la page d'accueil
+                        response.redirect('/login');
+                    })
+                }
+            });
+
+/*             //l'utiliisateur existe et s'est correctement identifié, on stocke les infos utiles en session
+            request.session.user = {
+                firstname: user.firstname,
+                lastname: user.names,
+                email: user.email,
+                role: user.role
+            }
+            
+
+ */
+        
     }
 }

@@ -36,6 +36,11 @@ router.get('/logout', userController.logout);
 //profile
 router.get('/profile', userController.profile);
 
+//s'inscrire
+router.get('/signup', userController.signup);
+//traitement du formulaire
+router.post('/signup', userController.doSignup);
+
 
 //interface d'administration
 //cette route sera protégée par le middleware adminMW

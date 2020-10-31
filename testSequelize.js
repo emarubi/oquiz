@@ -74,7 +74,7 @@ require('dotenv').config();
 // });
 
 
-//Trouver pour l'utilisateur d'id 3, les quizzes dont il est l'auteur, les questions associées et leur bonne réponse
+/* //Trouver pour l'utilisateur d'id 3, les quizzes dont il est l'auteur, les questions associées et leur bonne réponse
 User.findByPk(3, {
     include: {
         association: 'quizzes',
@@ -94,4 +94,4 @@ Level.findByPk(1, {
             include: 'tags'
         }
     }
-})
+}) */
