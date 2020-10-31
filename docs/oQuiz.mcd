@@ -1,0 +1,22 @@
+UTILISATEUR: _email, password, nom, prenom
+CREE, 0N UTILISATEUR, 11 QUIZ
+QUIZ: _titre, description
+APPARTIENT, 0N QUIZ, 0N THEME
+THEME: _nom
+
+
+POSSEDE, 0N QUIZ, 11 QUESTION
+
+
+NIVEAU: _nom
+CONCERNE, 0N NIVEAU, 11 QUESTION
+QUESTION: _intitulé, anedote, infos
+CONTIENT, 0N QUESTION, 11 REPONSE
+
+
+:
+:
+
+VALIDE, 11 QUESTION, 01 REPONSE
+:
+REPONSE: _intitulé

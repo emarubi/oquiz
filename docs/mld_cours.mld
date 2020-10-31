@@ -1,0 +1,23 @@
+niveau (id SERIAL, nom TEXT)
+
+utilisateur (id SERIAL, nom TEXT, prenom TEXT, age INT, email TEXT, password TEXT, role TEXT)
+
+quiz (id SERIAL, titre TEXT, description TEXT, date_creation TIMESTAMP, #utilisateur(id) INT)
+
+theme (id SERIAL, nom TEXT, description TEXT)
+
+question (id SERIAL, intitule TEXT, anecdote TEXT, infos TEXT, #quiz(id) INT, #niveau(id) INT, #reponse(id) INT)
+
+reponse (id SERIAL, intitule TEXT, #question(id) INT)
+
+quiz_appartient_theme (#quiz(id) INT, #theme(id) INT)
+
+
+
+
+Infos complémentaires sur les relations :
+On va observer les cardinalités max pour chaque relation entre 2 entités pour déterminer comment implémenter cette relation en SQL
+
+- max 1,n : on ajoute une clé étrangère sur la table qui détient 1
+- max 1,1 : on met une clé étrangère sur une des 2 tables, là où ça parait logique
+- max n,n : on est obligé d'ajouter une nouvelle table pour faire la relation entre les 2 entités

@@ -1,0 +1,13 @@
+niveau (id SERIAL, nom TEXT)
+
+utilisateur (id SERIAL, email TEXT, password TEXT, nom TEXT, prenom TEXT)
+
+quiz (id SERIAL, titre TEXT, description TEXT, #utilisateur(id) INT)
+
+theme (id SERIAL, nom TEXT)
+
+question (id SERIAL, intitule TEXT, anecdote TEXT, infos TEXT, #quiz(id) INT, #niveau(id) INT, #reponse(id) INT)
+
+reponse (id SERIAL, intitule TEXT, #question(id) INT)
+
+quiz_appartient_theme (#quiz(id) INT, #theme(id) INT)
