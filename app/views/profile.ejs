@@ -5,15 +5,15 @@
   <p class="lead">Mes informations sur O'quizz !</p>
 </div>
 
-
+<%# les données viennenent de l'objet user de session %> 
 <div class="profile">
-  <div class="form-group mb-5">
-    <label class="text-secondary">Nom</label>
-    <div class="h2"><%= user.lastname %></div>
-  </div>
   <div class="form-group mb-5">
     <label class="text-secondary">Prénom</label>
     <div class="h2"><%= user.firstname %></div>
+  </div>
+  <div class="form-group mb-5">
+    <label class="text-secondary">Nom</label>
+    <div class="h2"><%= user.lastname %></div>
   </div>
   <div class="form-group mb-5">
     <label class="text-secondary">Email</label>

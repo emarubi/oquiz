@@ -26,7 +26,7 @@ module.exports = {
             //l'utiliisateur existe et s'est correctement identifié, on stocke les infos utiles en session
             request.session.user = {
                 firstname: user.firstname,
-                lastname: user.names,
+                lastname: user.lastname,
                 email: user.email,
                 role: user.role
             }
@@ -49,7 +49,9 @@ module.exports = {
         response.redirect('/');
     },
     profile: (request, response) => {
-        response.render('profile');
+
+            response.render('profile');
+   
     },
     signup: (request, response) => {
         response.render('signup');
@@ -103,16 +105,16 @@ module.exports = {
                 }
             });
 
-/*             //l'utiliisateur existe et s'est correctement identifié, on stocke les infos utiles en session
+          //l'utiliisateur existe et s'est correctement identifié, on stocke les infos utiles en session
             request.session.user = {
                 firstname: user.firstname,
-                lastname: user.names,
+                lastname: user.lastname,
                 email: user.email,
                 role: user.role
             }
             
 
- */
+ 
         
     }
 }

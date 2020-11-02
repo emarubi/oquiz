@@ -16,16 +16,17 @@
         on fait une condition ternaire ici, c'est plus court
         SI le champ est disponible ALORS on met sa valeur dans l'attribut value
         SINON, on met une chaine vide dans value (valeur par défaut) %>
-            <div class="form-label-group">
-                <input type="lastname" class="form-control" id="lastname" name="lastname"
-                    aria-describedby="lastnameHelp" placeholder="Votre nom" value=<%= locals.fields ? locals.fields.lastname : '' %>>
-                <label for="lastname">Votre nom</label>
-            </div>
-
+            
             <div class="form-label-group">
                 <input type="firstname" class="form-control" id="firstname" name="firstname"
                     aria-describedby="firstnameHelp" placeholder="Votre prénom" value=<%= locals.fields ? locals.fields.firstname : '' %>>
                 <label for="firstname">Votre prénom</label>
+            </div>
+            
+            <div class="form-label-group">
+                <input type="lastname" class="form-control" id="lastname" name="lastname"
+                    aria-describedby="lastnameHelp" placeholder="Votre nom" value=<%= locals.fields ? locals.fields.lastname : '' %>>
+                <label for="lastname">Votre nom</label>
             </div>
 
             <div class="form-label-group">
