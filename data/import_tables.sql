@@ -55,10 +55,11 @@ CREATE TABLE IF NOT EXISTS "answer" (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "user" (
   "id" serial PRIMARY KEY,
-  "email" text NOT NULL,
-  "password" text NOT NULL,
-  "firstname" text NULL,
-  "lastname" text NULL
+  "email" TEXT NOT NULL,
+  "password" TEXT NOT NULL,
+  "firstname" TEXT NULL,
+  "lastname" TEXT, 
+  "role" TEXT DEFAULT 'user'
 );
 
 -- -----------------------------------------------------

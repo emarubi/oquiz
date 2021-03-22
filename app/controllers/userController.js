@@ -7,13 +7,13 @@ module.exports = {
     login: (request, response) => {
         response.render('login');
     },
-    doLogin: (request, response) => {
+    doLogin: async (request, response) => {
         //on cherche à identifier l'utilisateur à partir de son email
-        User.findOne({where: {email: request.body.email}}).then(user => {
+        try {
+            const user = await User.findOne({where: {email: request.body.email}});
             if (!user) {
                 return response.render('login', {error: 'Utilisateur non trouvé', fields: request.body});
             }
-
             //l'utilisateur avec cet email existe, on vérifie son mot de passe en comparant :
             //- la version en clair (saisie dans le formulaire)
             //- la version hashée (stockée en BDD)
@@ -40,8 +40,11 @@ module.exports = {
             }
             //le user est bien connecté et ses infos stockées en session, on le redirige vers la page d'accueil
             response.redirect('/');
-        });
+        } catch (error) {
+            response.status(500).send(error);
+        }
     },
+
     logout: (request, response) => {
         //on reset les infos du user en session
         request.session.user = false;
@@ -56,6 +59,7 @@ module.exports = {
     signup: (request, response) => {
         response.render('signup');
     },
+    
     doSignup: (request, response) => {
 
             // 1 firstname ne doit pas être vide
@@ -95,17 +99,28 @@ module.exports = {
                         lastname: request.body.lastname,
                         email: request.body.email,
                         password: hashedPassword,
-                        role: 'user'
+                        role: 'user' // ce n'est pas obligatoire d'ajouter le role, car dans la définition de la table il est a DEFAULT=user
                     });
 
                     newUser.save().then( () => {
                         //le user est bien connecté et ses infos stockées en session, on le redirige vers la page d'accueil
                         response.redirect('/login');
                     })
+
+/*                     // méthode static pour enregistrer un nouvel utilisateur
+                    User.create ({
+                        firstname: request.body.firstname,
+                        lastname: request.body.lastname,
+                        email: request.body.email,
+                        password: hashedPassword,
+                    }).then(user => {
+                        // on redirige l'utilisateur sur la route /login
+                        response.redirect('/login');
+                    }); */
                 }
             });
-
-          //l'utiliisateur existe et s'est correctement identifié, on stocke les infos utiles en session
+            // je n'ai pas besoin de stockr les données dans session, car je rédirige la page vers login , qui recrée la session
+/*           //l'utiliisateur existe et s'est correctement identifié, on stocke les infos utiles en session
             request.session.user = {
                 firstname: user.firstname,
                 lastname: user.lastname,
@@ -113,7 +128,7 @@ module.exports = {
                 role: user.role
             }
             
-
+ */
  
         
     }
